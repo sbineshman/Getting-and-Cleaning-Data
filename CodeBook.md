@@ -5,11 +5,11 @@ The purpose of this project is to demonstrate your ability to collect, work with
 One of the most exciting areas in all of data science right now is wearable computing - see for example this article . Companies like Fitbit, Nike, and Jawbone Up are racing to develop the most advanced algorithms to attract new users. The data linked to from the course website represent data collected from the accelerometers from the Samsung Galaxy S smartphone. A full description is available at the site where the data was obtained: 
 
 http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones 
-
-Source of the original data: 
-https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip . 
 -------------------------------------------------------------------------------------
-1. Download the file from website using following command:
+### Steps
+
+1. Download the file from website (Source of the original data)
+https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip . 
 
 fileUrl<-"https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
 download.file(fileUrl, destfile = "Dataset.zip" , mode="wb")
@@ -20,20 +20,19 @@ download.file(fileUrl, destfile = "Dataset.zip" , mode="wb")
 tmp1 <- read.table("train/X_train.txt")
 tmp2 <- read.table("test/X_test.txt")
 X <- rbind(tmp1, tmp2)
-#10299 obs. of  66 variables
+--10299 obs. of  66 variables
 
 tmp1 <- read.table("train/subject_train.txt")
 tmp2 <- read.table("test/subject_test.txt")
 S <- rbind(tmp1, tmp2)
-#10299 obs. of  1 variable
+--10299 obs. of  1 variable
 
 tmp1 <- read.table("train/y_train.txt")
 tmp2 <- read.table("test/y_test.txt")
 Y <- rbind(tmp1, tmp2)
-##10299 obs. of  1 variable
+--10299 obs. of  1 variable
 
-3. Load the features.txt file and use it to extracts only the measurements on the mean and standard deviation.
-
+3. Load the features.txt file and use it to extracts only the measurements on the mean and standard deviation. And assigned with the clean name
 
 features <- read.table("features.txt")
 indices_of_good_features <- grep("-mean\\(\\)|-std\\(\\)", features[, 2])
@@ -42,20 +41,21 @@ names(X) <- features[indices_of_good_features, 2]
 names(X) <- gsub("\\(|\\)", "", names(X))
 names(X) <- tolower(names(X))  
 
-##### 3. Adding the descriptive activity names to name the activity in the data set
+3. Adding the descriptive activity names to name the activity in the data set, remove any hash or extra spaces
 
 activity <- read.table("activity_labels.txt")
 activity[, 2] = gsub("_", "", tolower(as.character(activity[, 2])))
 Y[,1] = activity[Y[,1], 2]
 names(Y) <- "activity"
 
-#####  4. labeling the data set with descriptive activity names, and exporting to create a new "file merged_data_set.txt"
+4. labeling the data set with descriptive activity names, and exporting to create a new "file merged_data_set.txt"
 
 names(S) <- "subject"
 cleaned <- cbind(S, Y, X)
 write.table(cleaned, "merged_data_set.txt", row.names = FALSE)
+--10299 obs. of  68 variables
 
-#####  5. Creates tidy data set with the average of each variable for each activity and each subject. and creates a new file "merged_data_set_with_average.txt"
+5. Creates tidy data set with the average of each variable for each activity and each subject. and creates a new file "merged_data_set_with_average.txt"
 
 uniqueSubjects = unique(S)[,1]
 numSubjects = length(unique(S)[,1])
@@ -74,3 +74,4 @@ for (s in 1:numSubjects) {
         }
 }
 write.table(result, "merged_data_set_with_average.txt", row.names = FALSE)
+--180 obs. of  68 variables:
