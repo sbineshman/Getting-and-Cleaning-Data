@@ -6,33 +6,34 @@ One of the most exciting areas in all of data science right now is wearable comp
 
 http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones 
 
-Here are the data for the project: 
-
-https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip 
-
-<!-- -->
-
-###first section of the download the file from the website 
+Source of the original data: 
+https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip . 
+-------------------------------------------------------------------------------------
+1. Download the file from website using following command:
 
 fileUrl<-"https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
 download.file(fileUrl, destfile = "Dataset.zip" , mode="wb")
 
 
-####  1. Load them to the variable tmp1, tmp2 for the X variable, Y Variable and Subject Variable and merges the training and the test sets to create one data set.
+2. Load the file from train and test folder to the variable tmp1, tmp2 for the X variable, Y Variable and Subject Variable and merges the training and the test sets to create one data set.
 
 tmp1 <- read.table("train/X_train.txt")
 tmp2 <- read.table("test/X_test.txt")
 X <- rbind(tmp1, tmp2)
+#10299 obs. of  66 variables
 
 tmp1 <- read.table("train/subject_train.txt")
 tmp2 <- read.table("test/subject_test.txt")
 S <- rbind(tmp1, tmp2)
+#10299 obs. of  1 variable
 
 tmp1 <- read.table("train/y_train.txt")
 tmp2 <- read.table("test/y_test.txt")
 Y <- rbind(tmp1, tmp2)
+##10299 obs. of  1 variable
 
-#### 2. Extracts only the measurements on the mean and standard deviation for each measurement.
+3. Load the features.txt file and use it to extracts only the measurements on the mean and standard deviation.
+
 
 features <- read.table("features.txt")
 indices_of_good_features <- grep("-mean\\(\\)|-std\\(\\)", features[, 2])
