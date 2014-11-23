@@ -4,7 +4,7 @@ The purpose of this project is to demonstrate your ability to collect, work with
 
 ### Steps:
 
-1. First section is get the raw dataset from the website 
+1. Intially, get the raw dataset from the website 
 
 2. Load them to the variable tmp1, tmp2 for the X variable, Y Variable and Subject Variable and merges the training and the test sets to create one data set.
 
